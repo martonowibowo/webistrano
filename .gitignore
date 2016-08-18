@@ -1,0 +1,16 @@
+.idea
+config/*.yml
+db/*sqlite*
+tmp/*
+log/*
+templates
+vendor/bundler
+.bundle
+*~
+.DS_Store
+*.tmproj
+Gemfile.lock
+public/stylesheets/application.css
+unicorn/*
+*.sublime-project
+*.sublime-workspace

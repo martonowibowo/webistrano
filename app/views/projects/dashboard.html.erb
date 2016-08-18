@@ -1,0 +1,38 @@
+<% if current_user.admin? %>
+<fieldset class="fieldset">
+  <legend>Introduction and help</legend>
+
+  <div style="padding-top: 5px;">
+   Welcome to Webifony. Your first steps should be to create a project with a stage.
+   This stage can then be deployed once you made at least one host known to Webifony.
+   <br /><br />
+   For help and more documentation, see
+   <br />
+   <ul>
+      <li><a href="https://github.com/peritor/jverdeyen/wiki/Configuration-Parameters">Configuration Parameters</a></li>
+   </ul>
+  </div>
+</fieldset>
+
+<br />
+<% end %>
+
+<fieldset class="fieldset">
+  <legend>Recent deployments</legend>
+  <% if @deployments.nil? || @deployments.empty? %>
+    <br/>
+      No recent deployments.
+    <br/>
+  <% else %>
+    <% @deployments.each do |deployment| %>
+      <%= render(:partial => 'deployments/list_item', :locals => {:deployment => deployment}) %>
+    <% end %>
+  <% end %>
+</fieldset>
+
+<br />
+
+<% content_for(:page_title) do %>
+  <% @page_title = "Welcome to Webistrano Acomindo" %>
+  <h2>Welcome to Webifony</h2>
+<% end %>
