@@ -1,0 +1,41 @@
+Specially for Ubuntu 14.04 Installation.
+
+Install Depedencies :
+sudo apt-get update
+sudo apt-get install -y screen git build-essential curl mysql-server mc libmysqlclient-dev ruby-dev ruby1.9.1-full
+sudo gem install capistrano
+
+Create Database for Webistrano :
+mysql -uroot -ppassword
+mysql> CREATE DATABASE `webistrano_production`;
+mysql> CREATE USER 'webistrano'@'localhost' IDENTIFIED BY 'password';
+mysql> GRANT ALL PRIVILEGES ON `webistrano_production`.* TO 'webistrano'@'localhost' WITH GRANT OPTION;
+mysql> quit
+
+Clone webistrano repository in any folder you want.
+
+config webistrano.yml and database.yml in config folder, you can copy it from yml.sample.
+
+change production config db in database.yml to be like this:
+production:
+  adapter: mysql
+  database: webistrano_production
+  username: root ==> webistrano
+  password:      ==> your_super_secret_password
+  socket: /tmp/mysql.sock ==> /var/run/mysqld/mysqld.sock
+
+Install Bundler :
+sudo gem uninstall bundler
+sudo gem install bundler --version=1.0.10
+bundle install
+
+Install Rake
+sudo gem uninstall rake -v 10.4.2
+sudo gem install rake -v 0.8.7
+
+Migrate Database
+bundle exec rake db:migrate --trace RAILS_ENV=production
+
+Run Webistrano!!!
+ruby script/server -p 3000 -e production #to debug
+ruby script/server -d -p 3000 -e production #as a daemon
